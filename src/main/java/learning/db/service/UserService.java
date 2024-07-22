@@ -1,6 +1,6 @@
 package learning.db.service;
 
-import learning.db.dto.UserEntity;
+import learning.db.dto.UserDto;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface UserService {
 
-    void createUser(UserEntity user);
+    void createUser(UserDto user);
 
-    UserEntity getUser(Long id);
+    UserDto getUser(Long id);
 
-    List<UserEntity> getAllUsers();
+    List<UserDto> getAllUsers();
 
     void updateUser(Long id, String newName);
 

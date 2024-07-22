@@ -1,17 +1,17 @@
-package learning.db.dto;
+package learning.db.entity;
 
 /**
  * @author NAgafonov
  */
-public class UserEntity {
+public class User {
 
     private Long id;
     private String username;
 
-    public UserEntity() {
+    public User() {
     }
 
-    public UserEntity(Long id, String username) {
+    public User(Long id, String username) {
         this.id = id;
         this.username = username;
     }

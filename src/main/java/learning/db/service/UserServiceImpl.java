@@ -1,10 +1,13 @@
 package learning.db.service;
 
-import learning.db.dao.UserDAOImpl;
-import learning.db.dto.UserEntity;
+import learning.db.dto.UserDto;
+import learning.db.entity.User;
+import learning.db.repository.UserRepository;
+import learning.db.repository.UserRepositoryImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author NAgafonov
@@ -12,35 +15,39 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserDAOImpl userDao;
+    private final UserRepository userRepository;
 
-    public UserServiceImpl(UserDAOImpl userDao) {
-        this.userDao = userDao;
+    public UserServiceImpl(UserRepositoryImpl userDao) {
+        this.userRepository = userDao;
     }
 
     @Override
-    public void createUser(UserEntity user) {
-        userDao.createUser(user);
+    public void createUser(UserDto user) {
+        userRepository.createUser(new User(user.getId(), user.getUsername()));
     }
 
     @Override
-    public UserEntity getUser(Long id) {
-        return userDao.getUser(id);
+    public UserDto getUser(Long id) {
+        User user = userRepository.getUser(id);
+        return new UserDto(user.getId(), user.getUsername());
     }
 
     @Override
-    public List<UserEntity> getAllUsers() {
-        return userDao.getAllUsers();
+    public List<UserDto> getAllUsers() {
+        return userRepository.getAllUsers()
+                .stream()
+                .map(user -> new UserDto(user.getId(), user.getUsername()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public void updateUser(Long id, String newName) {
-        userDao.updateUser(id, newName);
+        userRepository.updateUser(id, newName);
     }
 
     @Override
     public void deleteUser(Long id) {
-        userDao.deleteUser(id);
+        userRepository.deleteUser(id);
     }
 
 }
